@@ -4,9 +4,10 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { authApi } from '@/lib/api';
 import toast from 'react-hot-toast';
+import type { UserRole } from '@/types';
 
 export default function RegisterPage() {
-  const [form, setForm] = useState({ name: '', email: '', password: '', role: 'student', confirmPassword: '' });
+  const [form, setForm] = useState<{ name: string; email: string; password: string; role: UserRole; confirmPassword: string }>({ name: '', email: '', password: '', role: 'student', confirmPassword: '' });
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 

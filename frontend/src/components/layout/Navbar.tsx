@@ -1,15 +1,43 @@
 'use client';
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState, logout } from '@/store/store';
+import { useAppDispatch, useAppSelector } from '@/store/store';
+import { logout } from '@/store/slices/authSlice';
+import { clearAuth } from '@/lib/auth';
 import { useRouter, usePathname } from 'next/navigation';
+import type { UserRole } from '@/types';
+
+const navLinks = [
+  { href: '/universities', label: 'Universities' },
+  { href: '/compare', label: 'Compare' },
+  { href: '/scholarships', label: 'Scholarships' },
+  { href: '/admission-predictor', label: 'Predictor' },
+  { href: '/career-guidance', label: 'Career' },
+  { href: '/chatbot', label: 'AI Chat' },
+  { href: '/community', label: 'Community' },
+];
+
+const userMenuLinks = [
+  { href: '/notifications', icon: '🔔', label: 'Notifications' },
+  { href: '/profile', icon: '👤', label: 'Profile' },
+  { href: '/saved', icon: '❤️', label: 'Saved Universities' },
+  { href: '/applications', icon: '📋', label: 'Applications' },
+  { href: '/settings', icon: '⚙️', label: 'Settings' },
+];
+
+const dashboardRouteMap: Record<UserRole, string> = {
+  student: '/dashboard/student',
+  parent: '/dashboard/parent',
+  university: '/dashboard/university',
+  counselor: '/dashboard/counselor',
+  admin: '/dashboard/admin',
+};
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
-  const { isAuthenticated, user } = useSelector((state: RootState) => state.auth);
-  const dispatch = useDispatch();
+  const { isAuthenticated, user } = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
   const router = useRouter();
   const pathname = usePathname();
   const userMenuRef = useRef<HTMLDivElement>(null);
@@ -26,31 +54,13 @@ export default function Navbar() {
 
   const handleLogout = () => {
     dispatch(logout());
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
+    clearAuth();
     router.push('/');
   };
 
-  const navLinks = [
-    { href: '/universities', label: 'Universities' },
-    { href: '/compare', label: 'Compare' },
-    { href: '/scholarships', label: 'Scholarships' },
-    { href: '/admission-predictor', label: 'Predictor' },
-    { href: '/career-guidance', label: 'Career' },
-    { href: '/chatbot', label: 'AI Chat' },
-    { href: '/community', label: 'Community' },
-  ];
-
   const getDashboardLink = () => {
     if (!user) return '/dashboard/student';
-    const map: Record<string, string> = {
-      student: '/dashboard/student',
-      parent: '/dashboard/parent',
-      university: '/dashboard/university',
-      counselor: '/dashboard/counselor',
-      admin: '/dashboard/admin',
-    };
-    return map[user.role] || '/dashboard/student';
+    return dashboardRouteMap[user.role] || '/dashboard/student';
   };
 
   return (
@@ -98,21 +108,11 @@ export default function Navbar() {
                     <Link href={getDashboardLink()} className="flex items-center space-x-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50" onClick={() => setUserMenuOpen(false)}>
                       <span>📊</span><span>Dashboard</span>
                     </Link>
-                    <Link href="/notifications" className="flex items-center space-x-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50" onClick={() => setUserMenuOpen(false)}>
-                      <span>🔔</span><span>Notifications</span>
-                    </Link>
-                    <Link href="/profile" className="flex items-center space-x-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50" onClick={() => setUserMenuOpen(false)}>
-                      <span>👤</span><span>Profile</span>
-                    </Link>
-                    <Link href="/saved" className="flex items-center space-x-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50" onClick={() => setUserMenuOpen(false)}>
-                      <span>❤️</span><span>Saved Universities</span>
-                    </Link>
-                    <Link href="/applications" className="flex items-center space-x-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50" onClick={() => setUserMenuOpen(false)}>
-                      <span>📋</span><span>Applications</span>
-                    </Link>
-                    <Link href="/settings" className="flex items-center space-x-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50" onClick={() => setUserMenuOpen(false)}>
-                      <span>⚙️</span><span>Settings</span>
-                    </Link>
+                    {userMenuLinks.map((link) => (
+                      <Link key={link.href} href={link.href} className="flex items-center space-x-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50" onClick={() => setUserMenuOpen(false)}>
+                        <span>{link.icon}</span><span>{link.label}</span>
+                      </Link>
+                    ))}
                     <div className="border-t border-gray-100 my-1" />
                     <button onClick={handleLogout} className="flex items-center space-x-2 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 w-full">
                       <span>🚪</span><span>Logout</span>
@@ -154,10 +154,11 @@ export default function Navbar() {
             {isAuthenticated ? (
               <>
                 <Link href={getDashboardLink()} onClick={() => setMobileMenuOpen(false)} className="block px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50">Dashboard</Link>
-                <Link href="/notifications" onClick={() => setMobileMenuOpen(false)} className="block px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50">Notifications</Link>
-                <Link href="/profile" onClick={() => setMobileMenuOpen(false)} className="block px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50">Profile</Link>
-                <Link href="/saved" onClick={() => setMobileMenuOpen(false)} className="block px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50">Saved</Link>
-                <Link href="/applications" onClick={() => setMobileMenuOpen(false)} className="block px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50">Applications</Link>
+                {userMenuLinks.map((link) => (
+                  <Link key={link.href} href={link.href} onClick={() => setMobileMenuOpen(false)} className="block px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50">
+                    {link.label}
+                  </Link>
+                ))}
                 <button onClick={handleLogout} className="block w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium text-red-600 hover:bg-red-50">
                   Logout
                 </button>

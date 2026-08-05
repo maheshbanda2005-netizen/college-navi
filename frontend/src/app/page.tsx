@@ -1,25 +1,71 @@
 'use client';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { useRouter } from 'next/navigation';
+import { ReactNode } from 'react';
 
-const features = [
-  { title: 'AI Recommendations', desc: 'Personalized university suggestions powered by ML', icon: '🤖', color: 'from-primary-500 to-primary-700' },
-  { title: 'Smart Comparison', desc: 'Compare universities across 50+ parameters', icon: '📊', color: 'from-accent-500 to-accent-700' },
-  { title: 'Admission Predictor', desc: 'Predict your admission chances with AI', icon: '🎯', color: 'from-green-500 to-green-700' },
-  { title: 'Scholarship Engine', desc: 'Find scholarships matching your profile', icon: '💰', color: 'from-purple-500 to-purple-700' },
-  { title: 'Career Guidance', desc: 'AI-powered career path recommendations', icon: '🚀', color: 'from-blue-500 to-blue-700' },
-  { title: 'AI Chatbot', desc: '24/7 instant answers to all your queries', icon: '💬', color: 'from-pink-500 to-pink-700' },
+interface Feature {
+  title: string;
+  desc: string;
+  icon: string;
+  color: string;
+  href: string;
+}
+
+interface Stat {
+  value: string;
+  label: string;
+}
+
+const features: Feature[] = [
+  { title: 'AI Recommendations', desc: 'Personalized university suggestions powered by ML', icon: '🤖', color: 'from-primary-500 to-primary-700', href: '/universities' },
+  { title: 'Smart Comparison', desc: 'Compare universities across 50+ parameters', icon: '📊', color: 'from-accent-500 to-accent-700', href: '/compare' },
+  { title: 'Admission Predictor', desc: 'Predict your admission chances with AI', icon: '🎯', color: 'from-green-500 to-green-700', href: '/admission-predictor' },
+  { title: 'Scholarship Engine', desc: 'Find scholarships matching your profile', icon: '💰', color: 'from-emerald-500 to-emerald-700', href: '/scholarships' },
+  { title: 'Career Guidance', desc: 'AI-powered career path recommendations', icon: '🚀', color: 'from-blue-500 to-blue-700', href: '/career-guidance' },
+  { title: 'AI Chatbot', desc: '24/7 instant answers to all your queries', icon: '💬', color: 'from-cyan-500 to-cyan-700', href: '/chatbot' },
 ];
 
-const stats = [
-  { value: '10K+', label: 'Universities' }, { value: '50K+', label: 'Courses' },
-  { value: '1M+', label: 'Students Helped' }, { value: '95%', label: 'Satisfaction' },
+const stats: Stat[] = [
+  { value: '10K+', label: 'Universities' },
+  { value: '50K+', label: 'Courses' },
+  { value: '1M+', label: 'Students Helped' },
+  { value: '95%', label: 'Satisfaction' },
 ];
+
+const recommendations = [
+  { name: 'IIT Bombay', match: 95, admit: 92 },
+  { name: 'NIT Trichy', match: 87, admit: 78 },
+  { name: 'BITS Pilani', match: 79, admit: 71 },
+  { name: 'VIT Vellore', match: 71, admit: 64 },
+];
+
+interface RecommendationCardProps {
+  name: string;
+  match: number;
+  admit: number;
+}
+
+function RecommendationCard({ name, match, admit }: RecommendationCardProps) {
+  return (
+    <div className="flex items-center justify-between bg-white rounded-lg p-4 shadow-sm">
+      <div className="flex items-center space-x-3">
+        <div className="w-10 h-10 bg-primary-100 rounded-lg flex items-center justify-center text-primary-700 font-bold">
+          {name.charAt(0)}
+        </div>
+        <div>
+          <div className="font-medium text-gray-900">{name}</div>
+          <div className="text-sm text-gray-500">Match: {match}%</div>
+        </div>
+      </div>
+      <div className="text-right">
+        <div className="text-primary-600 font-bold">{admit}%</div>
+        <div className="text-xs text-gray-500">Admit Chance</div>
+      </div>
+    </div>
+  );
+}
 
 export default function HomePage() {
-  const router = useRouter();
-
   return (
     <div>
       <section className="relative overflow-hidden bg-gradient-to-br from-gray-900 via-primary-900 to-gray-900 text-white">
@@ -39,12 +85,12 @@ export default function HomePage() {
               Personalized recommendations, admission prediction, and career guidance — all in one platform.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button onClick={() => router.push('/register')} className="btn-primary text-lg py-3 px-8 bg-white text-primary-900 hover:bg-gray-100">
+              <Link href="/register" className="btn-primary text-lg py-3 px-8 bg-white text-primary-900 hover:bg-gray-100">
                 Get Started Free
-              </button>
-              <button onClick={() => router.push('/universities')} className="btn-secondary text-lg py-3 px-8 bg-white/10 text-white border-white/30 hover:bg-white/20">
+              </Link>
+              <Link href="/universities" className="btn-secondary text-lg py-3 px-8 bg-white/10 text-white border-white/30 hover:bg-white/20">
                 Explore Universities
-              </button>
+              </Link>
             </div>
           </motion.div>
         </div>
@@ -73,14 +119,14 @@ export default function HomePage() {
           </motion.div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {features.map((f, i) => (
-              <motion.div key={f.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }}
-                className="card group cursor-pointer hover:shadow-lg"
-              >
-                <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${f.color} flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform`}>
-                  {f.icon}
-                </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">{f.title}</h3>
-                <p className="text-gray-600">{f.desc}</p>
+              <motion.div key={f.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }}>
+                <Link href={f.href} className="card group cursor-pointer hover:shadow-lg block">
+                  <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${f.color} flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform`}>
+                    {f.icon}
+                  </div>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">{f.title}</h3>
+                  <p className="text-gray-600">{f.desc}</p>
+                </Link>
               </motion.div>
             ))}
           </div>
@@ -105,28 +151,14 @@ export default function HomePage() {
                   </li>
                 ))}
               </ul>
-              <button onClick={() => router.push('/register')} className="btn-primary mt-8">
+              <Link href="/register" className="btn-primary mt-8 inline-block">
                 Start Your Journey
-              </button>
+              </Link>
             </motion.div>
             <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} className="bg-gradient-to-br from-primary-50 to-accent-50 rounded-2xl p-8">
               <div className="space-y-4">
-                {['IIT Bombay', 'Stanford University', 'NIT Trichy', 'MIT'].map((u, i) => (
-                  <div key={u} className="flex items-center justify-between bg-white rounded-lg p-4 shadow-sm">
-                    <div className="flex items-center space-x-3">
-                      <div className="w-10 h-10 bg-primary-100 rounded-lg flex items-center justify-center text-primary-700 font-bold">
-                        {u.charAt(0)}
-                      </div>
-                      <div>
-                        <div className="font-medium text-gray-900">{u}</div>
-                        <div className="text-sm text-gray-500">Match: {95 - i * 8}%</div>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-primary-600 font-bold">{92 - i * 7}%</div>
-                      <div className="text-xs text-gray-500">Admit Chance</div>
-                    </div>
-                  </div>
+                {recommendations.map((r) => (
+                  <RecommendationCard key={r.name} name={r.name} match={r.match} admit={r.admit} />
                 ))}
               </div>
             </motion.div>
@@ -140,9 +172,9 @@ export default function HomePage() {
           <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
             Join millions of students who have found their perfect match with EduNavigator AI
           </p>
-          <button onClick={() => router.push('/register')} className="btn-primary text-lg py-3 px-10 bg-accent-500 hover:bg-accent-600 text-white">
+          <Link href="/register" className="btn-primary text-lg py-3 px-10 bg-accent-500 hover:bg-accent-600 text-white">
             Create Free Account
-          </button>
+          </Link>
         </div>
       </section>
     </div>
