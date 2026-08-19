@@ -22,6 +22,7 @@ const resources = [
 
 const features = [
   { name: 'AI Recommendations', href: '/universities' },
+  { name: 'Mock Tests & Quizzes', href: '/mock-tests' },
   { name: 'Rank Predictor', href: '/rank-predictor' },
   { name: 'Branch Predictor', href: '/branch-predictor' },
   { name: 'ROI Calculator', href: '/roi-calculator' },

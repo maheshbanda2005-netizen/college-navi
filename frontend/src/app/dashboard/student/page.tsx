@@ -27,6 +27,7 @@ export default function StudentDashboard() {
             <p className="text-gray-600">Welcome back, John! Track your applications and recommendations</p>
           </div>
           <div className="flex space-x-3 mt-4 md:mt-0">
+            <Link href="/mock-tests" className="btn-accent text-sm">📝 Mock Tests</Link>
             <Link href="/universities" className="btn-primary text-sm">Browse Universities</Link>
             <Link href="/chatbot" className="btn-secondary text-sm">AI Counselor</Link>
           </div>

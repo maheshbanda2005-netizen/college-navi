@@ -11,10 +11,11 @@ const navLinks = [
   { href: '/universities', label: 'Universities' },
   { href: '/compare', label: 'Compare' },
   { href: '/scholarships', label: 'Scholarships' },
+  { href: '/mock-tests', label: 'Mock Tests' },
   { href: '/admission-predictor', label: 'Predictor' },
   { href: '/career-guidance', label: 'Career' },
   { href: '/chatbot', label: 'AI Chat' },
-  { href: '/community', label: 'Community' },
+  { href: '/mock-tests', label: 'Mock Tests' },
 ];
 
 const userMenuLinks = [

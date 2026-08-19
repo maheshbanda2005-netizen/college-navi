@@ -22,6 +22,7 @@ const features: Feature[] = [
   { title: 'Admission Predictor', desc: 'Predict your admission chances with AI', icon: '🎯', color: 'from-green-500 to-green-700', href: '/admission-predictor' },
   { title: 'Scholarship Engine', desc: 'Find scholarships matching your profile', icon: '💰', color: 'from-emerald-500 to-emerald-700', href: '/scholarships' },
   { title: 'Career Guidance', desc: 'AI-powered career path recommendations', icon: '🚀', color: 'from-blue-500 to-blue-700', href: '/career-guidance' },
+  { title: 'Mock Tests & Quizzes', desc: 'Practice EAPCET, JEE & NEET with rank estimates', icon: '📝', color: 'from-orange-500 to-orange-700', href: '/mock-tests' },
   { title: 'AI Chatbot', desc: '24/7 instant answers to all your queries', icon: '💬', color: 'from-cyan-500 to-cyan-700', href: '/chatbot' },
 ];
 
