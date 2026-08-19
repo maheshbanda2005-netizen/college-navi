@@ -164,15 +164,15 @@ export default function AdmissionPredictorPage() {
 
                 <div className="card">
                   <h3 className="font-semibold mb-4">Recommended Branch</h3>
-                  <div className="bg-blue-50 p-4 rounded border border-blue-200">
+                  <div className="bg-secondary-50 p-4 rounded border border-secondary-200">
                     <div className="flex justify-between items-center">
                       <div>
-                        <h4 className="font-bold text-blue-900">{result.bestBranch.branch}</h4>
-                        <p className="text-sm text-blue-700">Highest placement & package</p>
+                        <h4 className="font-bold text-secondary-900">{result.bestBranch.branch}</h4>
+                        <p className="text-sm text-secondary-700">Highest placement & package</p>
                       </div>
                       <div className="text-right">
-                        <div className="text-2xl font-bold text-blue-600">₹{result.bestBranch.avgPackage} LPA</div>
-                        <div className="text-sm text-blue-600">{result.bestBranch.placement}% placement</div>
+                        <div className="text-2xl font-bold text-primary-600">₹{result.bestBranch.avgPackage} LPA</div>
+                        <div className="text-sm text-secondary-600">{result.bestBranch.placement}% placement</div>
                       </div>
                     </div>
                   </div>
@@ -260,7 +260,7 @@ export default function AdmissionPredictorPage() {
                         </td>
                         <td className="px-4 py-2">₹{p.avgPackage} LPA</td>
                         <td className="px-4 py-2">{p.placementRate}%</td>
-                        <td className="px-4 py-2"><span className="badge bg-blue-50 text-blue-700">{p.aiScore}</span></td>
+                        <td className="px-4 py-2"><span className="badge bg-primary-50 text-primary-700 border border-primary-100">{p.aiScore}</span></td>
                       </tr>
                     ))}
                   </tbody>

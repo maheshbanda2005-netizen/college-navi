@@ -11,3 +11,5 @@ __pycache__/
 venv/
 coverage/
 .nyc_output/
+
+tsconfig.tsbuildinfo

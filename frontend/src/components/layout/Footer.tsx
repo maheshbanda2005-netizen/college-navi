@@ -112,7 +112,7 @@ export default function Footer() {
           </motion.div>
         </div>
 
-        <div className="h-px bg-gray-800 mb-6" />
+<div className="h-px bg-gray-800 mb-6" />
 
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-sm text-gray-500">

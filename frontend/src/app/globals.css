@@ -53,3 +53,38 @@
 
 .animate-fade-in { animation: fadeIn 0.5s ease-in-out; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-12px) scale(1.02); }
+}
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.gradient-text-sweep {
+  background-image: linear-gradient(90deg,
+    #ffffff 0,
+    #ffffff 33.33%,
+    #82BCFF 40%,
+    #2483FF 45%,
+    #FF66F4 50%,
+    #FF3029 55%,
+    #FE7B02 60%,
+    transparent 66.67%,
+    transparent);
+  background-size: 300% 100%;
+  background-position: 0% 0px;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.gradient-text-animate {
+  animation: gradientSweep 1.2s ease-in-out 0.1s;
+}
+
+@keyframes gradientSweep {
+  from { background-position: 100% 0px; }
+  to { background-position: 0% 0px; }
+}

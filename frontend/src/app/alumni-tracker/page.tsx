@@ -108,7 +108,7 @@ export default function AlumniTrackerPage() {
                 <div className="text-sm text-gray-600 mb-1">Top Companies</div>
                 <div className="flex flex-wrap gap-2 mt-2">
                   {['Google', 'Microsoft', 'Amazon', 'Goldman Sachs'].map(c => (
-                    <span key={c} className="badge bg-blue-50 text-blue-700 border border-blue-200">{c}</span>
+                    <span key={c} className="badge bg-secondary-100 text-secondary-800 border border-secondary-200">{c}</span>
                   ))}
                 </div>
               </div>

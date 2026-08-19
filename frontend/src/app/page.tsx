@@ -78,7 +78,7 @@ export default function HomePage() {
             </div>
             <h1 className="text-5xl md:text-7xl font-extrabold mb-6 leading-tight">
               Find Your Perfect<br />
-              <span className="gradient-text">University</span> with AI
+              <span className="gradient-text-sweep gradient-text-animate">University</span> with AI
             </h1>
             <p className="text-xl text-gray-300 max-w-2xl mx-auto mb-10">
               Discover, compare, and apply to universities worldwide powered by artificial intelligence.
